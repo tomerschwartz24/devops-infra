@@ -1,0 +1,40 @@
+name: Terraform Plan and Apply
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - id: "aws_creds"
+        name: "Configure Access & Secret keys"
+        uses: "aws-actions/configure-aws-credentials@v1"
+        with:
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "eu-west-1"
+        
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: v1.4.5
+
+      - name: Terraform init
+        run: terraform -chdir=terraform init
+        id: init-tf-configuration
+        
+      - name: Terraform plan
+        run: terraform plan -chdir=terraform -input=false
+        id: plan-tf-configuration
+
+      - name: Terraform Apply
+        run: terraform -chdir=terraform apply --auto-approve -input=false
+        id: apply-tf-configuration
+
+      
