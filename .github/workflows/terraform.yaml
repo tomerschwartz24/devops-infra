@@ -30,7 +30,7 @@ jobs:
         id: init-tf-configuration
         
       - name: Terraform plan
-        run: terraform plan -chdir=terraform -input=false
+        run: terraform -chdir=terraform plan -input=false
         id: plan-tf-configuration
 
       - name: Terraform Apply
