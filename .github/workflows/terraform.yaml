@@ -25,16 +25,19 @@ jobs:
         with:
           terraform_version: v1.4.5
 
-      - name: Terraform init
+      - name: Terraform Init
         run: terraform -chdir=terraform init
         id: init-tf-configuration
         
-      - name: Terraform plan
+      - name: Terraform Plan
         run: terraform -chdir=terraform plan -input=false
         id: plan-tf-configuration
 
       - name: Terraform Apply
         run: terraform -chdir=terraform apply --auto-approve -input=false
         id: apply-tf-configuration
+
+      - name: Terraform Destroy 
+        run: terraform -chdir=terraform destroy --auto-approve -input=false
 
       
