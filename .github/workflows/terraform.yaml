@@ -1,9 +1,13 @@
-name: Terraform Plan and Apply
+name: Terraform Init and Apply
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'apply'
+
 
 jobs:
   terraform:
@@ -27,17 +31,16 @@ jobs:
 
       - name: Terraform Init
         run: terraform -chdir=terraform init
-        id: init-tf-configuration
+        id: init-infra
         
-      - name: Terraform Plan
-        run: terraform -chdir=terraform plan -input=false
-        id: plan-tf-configuration
-
       - name: Terraform Apply
         run: terraform -chdir=terraform apply --auto-approve -input=false
-        id: apply-tf-configuration
+        id: deploy-infra
 
-      - name: Terraform Destroy 
+
+      - name: Terraform Destroy
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy-cluster' }}
         run: terraform -chdir=terraform destroy --auto-approve -input=false
+        id: destroy-infra
 
       
