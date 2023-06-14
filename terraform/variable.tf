@@ -13,7 +13,7 @@ variable "instance_type" {
 variable "aws_region" {
   description = "The designated Amazon Web Services region."
   type        = string
-  default     = "eu-west-1"
+  default     = "eu-central-1"
 }
 
 variable "cluster_cidr" {
