@@ -1,4 +1,4 @@
-name: Terraform Init and Apply
+name: EKS Deployment
 
 on:
   workflow_dispatch:
