@@ -9,7 +9,7 @@ on:
         default: 'apply'
   push:
     branches-ignore:
-      - main   #### Change to production 
+      - main
 
 jobs:
   terraform:

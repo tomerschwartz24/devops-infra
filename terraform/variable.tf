@@ -25,7 +25,7 @@ variable "cluster_cidr" {
 variable "cluster_name" {
   description = "The name of the Kubernetes cluster."
   type        = string
-  default     = "production_cluster"
+  default     = "mock_cluster"
 }
 
 variable "cluster_version" {
