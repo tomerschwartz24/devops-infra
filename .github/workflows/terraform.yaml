@@ -25,7 +25,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-region: "eu-central-1"
-        
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -34,15 +34,13 @@ jobs:
       - name: Terraform Init
         run: terraform -chdir=terraform init
         id: init-infra
-        
+
       - name: Terraform Apply
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply' }}
         run: terraform -chdir=terraform apply --auto-approve -input=false
         id: deploy-infra
 
-
       - name: Terraform Destroy
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy-cluster' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy' }}
         run: terraform -chdir=terraform destroy --auto-approve -input=false
         id: destroy-infra
-
-      
